@@ -164,6 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -191,6 +192,7 @@ return [
         App\Providers\GrupoLotesSimplificadoServiceProvider::class,
         App\Providers\MessagesServiceProvider::class,
         App\Providers\ServidoresMoodleServiceProvider::class,
+        App\Providers\RopositoryServiceProvider::class
 
 
     ],

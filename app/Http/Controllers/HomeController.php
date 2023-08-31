@@ -18,10 +18,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $env = env('APP_ENV', 'production');
-        if ($env == 'local' || $env == 'development')
-            $this->middleware('authdev:ti.ead');
-        else
+        // $env = env('APP_ENV', 'production');
+        // if ($env == 'local' || $env == 'development')
+        //     $this->middleware('authdev:ti.ead');
+        // else
             $this->middleware('auth');
     }
 

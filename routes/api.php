@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function(){
 
-    Route::get('/logado2', 'UsuarioController@usuarioLogado');
+    Route::get('/logado2', 'LoginApiController@usuarioLogado');
 
 });
 
-Route::get('/logado', 'UsuarioController@usuarioLogado');
+Route::post('/login', 'LoginApiController@login');
