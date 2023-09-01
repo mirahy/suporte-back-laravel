@@ -24,12 +24,18 @@ class LoginValidator extends LaravelValidator
           'password'                   => 'bail|required',
 
         ],
-        ValidatorInterface::RULE_UPDATE => [],
+        ValidatorInterface::RULE_UPDATE => [
+          'email'                      => 'string',
+          'password'                   => 'string',
+        ],
       ];
 
       protected $messages = [
-        'email.required' => 'Email e/ou senha inválidos!',
-        'password.required' => 'Email e/ou senha inválidos!',
+        'email.required'    => 'Email é obrigatório!',
+        'password.required' => 'Senha é obrigatoria!',
+        'email.string'      => 'Email/Senha incorreto!',
+        'password.string'   => 'Email/Senha incorreto!',
+
         
     ];
 }

@@ -13,14 +13,14 @@ use Prettus\Validator\Exceptions\ValidatorException;
 
 class UserService {
 
-    Private $validator;
+    Private $loginValidator;
     Private $repository;
 
 
-    public function __construct(LoginValidator $validator, UserRepository $repository) {
+    public function __construct(LoginValidator $loginValidator, UserRepository $repository) {
 
-        $this->validator   = $validator;
-        $this->repository  = $repository;
+        $this->loginValidator       = $loginValidator;
+        $this->repository           = $repository;
         
     }
 
@@ -32,17 +32,22 @@ class UserService {
 
         try {
             //validar campos
-            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
-
+            $this->loginValidator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+            // realiza login
             $auth = Auth::attempt($data);
-
+            //se usuário foi autenticado, revoga todos o tokens do usuário se existir e retorna o usuário e toke gerado.
             if($auth){
                 $user = $this->repository->FindWhere(['email' => $request->get('email')])->first();
+                $tokens = $this->getAllTokensUser($request);
+                if($tokens)
+                    $this->revokeAllTokensUser($request);
                 $token = $user->createToken($request->get('email'));
-            }
 
-            return [$token, $user];
-
+                return [$token, $user];
+            }else{
+                $data = ['email' => null, 'password' => null];
+                $this->loginValidator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            }    
 
         } 
         catch (Exception $e)
@@ -54,11 +59,36 @@ class UserService {
             default                         : return $e;
           }
         }
-
     }
 
     public function usuarioLogado() {
         return Auth::user();
     }
+
+    public function revokeAllTokensUser(Request $request){
+         // Revoke all tokens...
+        $request->user()->tokens()->delete();
+        $tokens = $this->getAllTokensUser($request);
+        if (!empty($tokens[0]))
+            return false;
+        return true;
+    }
+
+    public function revokecurrentAccessTokenUser(Request $request){
+        // Revoke the token that was used to authenticate the current request...
+        $request->user()->currentAccessToken()->delete();
+    }
+
+    public function revokeSpecificTokens(Request $request, $tokenId){
+        // Revoke a specific token...
+        $request->user()->tokens()->where('id', $tokenId)->delete();
+    }
+
+    public function getAllTokensUser(Request $request){
+        return $request->user()->tokens;
+    }
+
+
+
 
 }
