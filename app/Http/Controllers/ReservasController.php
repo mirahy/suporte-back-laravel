@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendMailReserva;
-use App\Recurso;
+use App\Models\Recurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Reserva;
-use App\Status;
-use App\User;
-use App\Configuracoes;
+use App\Models\Reserva;
+use App\Models\Status;
+use App\Models\User;
+use App\Models\Configuracoes;
 use Illuminate\Support\Facades\Auth;
 use Adldap\Laravel\Facades\Adldap;
 use Illuminate\Support\Facades\Mail;

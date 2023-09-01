@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\ServidorMoodle;
-use App\User;
+use App\Models\ServidorMoodle;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

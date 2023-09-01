@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracoes;
-use App\LoteSalas;
-use App\LoteSalasSimplificado;
-use App\Sala;
-use App\Status;
-use App\User;
+use App\Models\Configuracoes;
+use App\Models\LoteSalas;
+use App\Models\LoteSalasSimplificado;
+use App\Models\Sala;
+use App\Models\Status;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

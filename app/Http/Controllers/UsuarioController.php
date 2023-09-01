@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Usuario;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Adldap\Laravel\Facades\Adldap;
 use Illuminate\Support\Facades\Validator;
 use Session;
-use App\User;
+use App\Models\User;
 use Exception;
 
 class UsuarioController extends Controller

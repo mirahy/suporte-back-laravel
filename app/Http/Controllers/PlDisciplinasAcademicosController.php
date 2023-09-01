@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracoes;
-use App\Curso;
-use App\Faculdade;
-use App\Macro;
-use App\PeriodoLetivo;
-use App\PlDisciplinaAcademico;
-use App\Sala;
-use App\SuperMacro;
-use App\User;
+use App\Models\Configuracoes;
+use App\Models\Curso;
+use App\Models\Faculdade;
+use App\Models\Macro;
+use App\Models\PeriodoLetivo;
+use App\Models\PlDisciplinaAcademico;
+use App\Models\Sala;
+use App\Models\SuperMacro;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

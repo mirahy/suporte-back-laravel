@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\PeriodoLetivoCategoria;
-use App\User;
+use App\Models\PeriodoLetivoCategoria;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

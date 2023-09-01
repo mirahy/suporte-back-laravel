@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\GrupoLotesSimplificado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;

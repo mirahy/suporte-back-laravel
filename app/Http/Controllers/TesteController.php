@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Adldap\Laravel\Facades\Adldap;
 use Illuminate\Support\Facades\Mail;
-use \App\Usuario;
-use \App\User;
-use \App\Patrimonio;
+use \App\Models\Usuario;
+use \App\Models\User;
+use \App\Models\Patrimonio;
 use \App\Mail\SendMailUser;
-use App\Sala;
-use App\Configuracoes;
+use App\Models\Sala;
+use App\Models\Configuracoes;
 use Illuminate\Support\Facades\App;
 
 class TesteController extends Controller

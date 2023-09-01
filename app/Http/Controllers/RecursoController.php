@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Recurso;
-use App\User;
+use App\Models\Recurso;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RecursoController extends Controller

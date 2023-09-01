@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracoes;
-use App\MacroSuperMacro;
-use App\SalaSimplificada;
-use App\SuperMacro;
-use App\User;
+use App\Models\Configuracoes;
+use App\Models\MacroSuperMacro;
+use App\Models\SalaSimplificada;
+use App\Models\SuperMacro;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

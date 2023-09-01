@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UnidadeOrganizacional;
-use App\User;
+use App\Models\UnidadeOrganizacional;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Adldap\Laravel\Facades\Adldap;
 use Adldap\Models\Attributes\AccountControl;
-use App\Configuracoes;
+use App\Models\Configuracoes;
 
 class UnidadeOrganizacionalController extends Controller
 {

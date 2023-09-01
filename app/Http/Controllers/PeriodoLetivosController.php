@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracoes;
-use App\PeriodoLetivo;
-use App\User;
+use App\Models\Configuracoes;
+use App\Models\PeriodoLetivo;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

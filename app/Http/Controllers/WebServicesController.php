@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\GrupoLotesSimplificado;
+use App\Models\GrupoLotesSimplificado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
