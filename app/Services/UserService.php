@@ -41,9 +41,10 @@ class UserService {
                 $tokens = $this->getAllTokensUser($request);
                 if($tokens)
                     $this->revokeAllTokensUser($request);
-                $token = $user->createToken($request->get('email'));
+                $nameToken = $request->get('email') ."_". hash('md5', now());
+                $token = $user->createToken($nameToken);
 
-                return [$token, $user];
+                return ['token' => $token, 'user' => $user];
             }else{
                 $data = ['email' => null, 'password' => null];
                 $this->loginValidator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
@@ -61,8 +62,12 @@ class UserService {
         }
     }
 
-    public function usuarioLogado() {
-        return Auth::user();
+    public function logout(Request $request){
+        $this->revokeAllTokensUser($request); 
+    }
+
+    public function usuarioLogado(Request $request) {
+        return $request->user();
     }
 
     public function revokeAllTokensUser(Request $request){
@@ -88,7 +93,15 @@ class UserService {
         return $request->user()->tokens;
     }
 
+    public function getFirstLastNameUser() {
+        $user = Auth::user();
+        $name = explode(" ", $user->name);
+        $firstName = $name[0];
+        $lastname = $name[count($name)-1];
 
+        return $firstName. ' ' . $lastname;
+
+    }
 
 
 }

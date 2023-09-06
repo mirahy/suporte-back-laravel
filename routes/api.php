@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\LoginApiController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware('corsApi')->group(function () {
 
-    Route::get('/logado', 'LoginApiController@usuarioLogado');
+    Route::middleware('auth:sanctum')->group(function () {
+        // UserController routes
+        Route::controller(UserController::class)->group(function() {
+            Route::get('/get-tokens-user', 'getAllTokensUser');
+            Route::get('/revoke-tokens-user', 'revokeAllTokensUser');
+            Route::get('/get-first-last-name-user', 'getFirstLastNameUser');
+        });
 
+        // LoginApiController routes
+        Route::controller(LoginApiController::class)->group(function() {
+            Route::get('/logado', 'usuarioLogado');
+            Route::get('/logout', 'logout');
+        });
+        
+        
+    });
+
+    Route::post('/login', [LoginApiController::class, 'login']);
+    
+    
 });
-
-Route::post('/login', 'LoginApiController@login');

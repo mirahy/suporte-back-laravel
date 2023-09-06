@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $this->service      = $service;
         $this->middleware('auth');
-        $this->middleware('permissao:'.User::PERMISSAO_ADMINISTRADOR)->except(['usuarioLogado', 'list']);
+        // $this->middleware('permissao:'.User::PERMISSAO_ADMINISTRADOR)->except(['usuarioLogado', 'list']);
     }
     /**
      * Display a listing of the resource.
@@ -211,8 +211,8 @@ class UserController extends Controller
      */
     public function edit(User $usuario)
     {
-        //$us = Usuario::findOrFail($usuario);
-        //return $usuario->with(['setor:id,sigla,campus_id'])->get(['id','login','nome','email','permissao','setor_id']);
+        $us = Usuario::findOrFail($usuario);
+        return $usuario->with(['setor:id,sigla,campus_id'])->get(['id','login','nome','email','permissao','setor_id']);
         return $usuario;
     }
 
@@ -250,13 +250,7 @@ class UserController extends Controller
     }
 
     public function getFirstLastNameUser() {
-        $user = Auth::user();
-        $name = explode(" ", $user->name);
-        $firstName = $name[0];
-        $lastname = $name[count($name)-1];
-
-        return $firstName. ' ' . $lastname;
-
+        return $this->service->getFirstLastNameUser();
     }
 
     public function getAllTokensUser(Request $request){

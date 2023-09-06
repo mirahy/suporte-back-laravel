@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use \App\User;
+use \App\Models\User;
 
 class ValidadorPermissaoServiceProvider extends ServiceProvider {
 

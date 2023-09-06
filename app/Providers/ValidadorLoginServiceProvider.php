@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use \App\User;
+use \App\Models\User;
+use \App\Models\Usuario;
 
 class ValidadorLoginServiceProvider extends ServiceProvider {
 

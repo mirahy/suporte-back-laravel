@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use App;
-use App\Registro;
-use App\ItemInventario;
-use App\ItemInventarioPatrimoniado;
-use App\Patrimonio;
-use App\EstadoConservacao;
-use App\Status;
-use App\Usuario;
-use App\PendenciaInventario;
+use App\Models\Registro;
+use App\Models\ItemInventario;
+use App\Models\ItemInventarioPatrimoniado;
+use App\Models\Patrimonio;
+use App\Models\EstadoConservacao;
+use App\Models\Status;
+use App\Models\Usuario;
+use App\Models\PendenciaInventario;
 
 class AdministracaoController extends Controller
 {

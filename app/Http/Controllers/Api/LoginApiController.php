@@ -20,8 +20,13 @@ class LoginApiController extends Controller
        return $token;
     }
 
-    public function usuarioLogado() { // mover para controller do usuario
-        return $this->service->usuarioLogado();
+    public function logout(Request $request){
+        $token = $this->service->logout($request);
+        return $token;
+     }
+
+    public function usuarioLogado(Request $request) { 
+        return $this->service->usuarioLogado($request);
     }
 
 }
