@@ -19,19 +19,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('corsApi')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
-        // UserController routes
-        Route::controller(UserController::class)->group(function() {
-            Route::get('/get-tokens-user', 'getAllTokensUser');
-            Route::get('/revoke-tokens-user', 'revokeAllTokensUser');
-            Route::get('/get-first-last-name-user', 'getFirstLastNameUser');
-        });
-
         // LoginApiController routes
         Route::controller(LoginApiController::class)->group(function() {
             Route::get('/logado', 'usuarioLogado');
             Route::get('/logout', 'logout');
         });
-        
+        // UserController routes
+        Route::controller(UserController::class)->group(function() {
+            Route::get('/get-tokens-user', 'getAllTokensUser');
+            Route::get('/revoke-tokens-user', 'revokeAllTokensUser');
+            Route::get('/get-first-last-name-user', 'getFirstLastNameUser');
+            Route::get('/usuarios/lista', 'all');
+            Route::resource('usuarios', 'UserController');
+        });
+  
         
     });
 

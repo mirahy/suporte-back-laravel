@@ -17,141 +17,31 @@ class UserController extends Controller
 
     private $service;
 
-    public function __construct( UserService $service)
+    public function __construct(UserService $service)
     {
         $this->service      = $service;
         $this->middleware('auth');
-        // $this->middleware('permissao:'.User::PERMISSAO_ADMINISTRADOR)->except(['usuarioLogado', 'list']);
+        $this->middleware('permissao:' . User::PERMISSAO_ADMINISTRADOR)->except(['usuarioLogado', 'list']);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //$u = Usuario::with(['setor:id,sigla,campus_id'])->get(['id','login','nome','email','permissao','setor_id']);
-        //$u = Usuario::all();
-        //return $u;
-        //return view('config.usuarios',['usuarios' => $this->all()]);
-        return view("layouts.app-angular");
-    }
+
     public function all()
     {
-        return User::all();
+        return $this->service->all();
     }
-    public function list()
+
+    public function list(Request $request)
     {
-        $logado = $this->usuarioLogado();
-        if ($logado->isAdmin())
-            return User::all();
-        else
-            return [];
+        return $this->service->list($request);
     }
 
-    public function usuarioLogado() {
-        return Auth::user();
+    public function usuarioEmail($uid)
+    {
+        return $this->service->usuarioEmail($uid);
     }
 
-    public function usuarioEmail($uid) {
-        $usuario = User::find($uid);
-        $email = "";
-        if($usuario) {
-            try {
-                $usuarioLdap = Adldap::search()->users()->find($usuario->email);
-                if ($usuarioLdap != NULL && isset ($usuarioLdap->getAttributes()["mail"]))
-                    $email = strtolower ($usuarioLdap->getAttributes()["mail"][0]);
-            } catch (Exception $e) {
-
-            }
-        }
-
-        return $email;
-    }
-
-    public function getInfosLdapServidorByDescription($cpf, $createUser = false) {
-        $STRING_BAN = "Aluno";
-        $STRING_BAN2 = "Desativados";
-        if (strlen($cpf) != 11 && strlen($cpf) != 14)
-            return null;
-        if (strlen($cpf) == 11)
-            $cpf = substr($cpf,0,3).".".substr($cpf,3,3).".".substr($cpf,6,3)."-".substr($cpf,9,2);
-        $us = Adldap::search()->where('description', '=', $cpf)->get();
-        $u = null;
-        if (count($us)) {
-            if (count($us) > 1) {
-                for ($i = 0; $i < count($us); $i++) {
-                    $brk = true;
-                    $memberof = [];
-                    if (!isset($us[$i]->getAttributes()["memberof"]))
-                        $brk = false;
-                    else
-                        $memberof = $us[$i]->getAttributes()["memberof"];
-                    foreach ($memberof as $m) {
-                        if (is_int(strpos ($m, $STRING_BAN))){
-                            $brk = false;
-                            break;
-                        }
-
-                    }
-
-                    $distinguishedname = [];
-                    if (!isset($us[$i]->getAttributes()["distinguishedname"]))
-                        $brk = false;
-                    else
-                        $distinguishedname = $us[$i]->getAttributes()["distinguishedname"];
-                    foreach ($distinguishedname as $d) {
-                        if (is_int(strpos ($d, $STRING_BAN2))){
-                            $brk = false;
-                            break;
-                        }
-
-                    }
-                    if ($brk) {
-                        $u = $us[$i];
-                        break;
-                    }
-                }
-            }
-            else
-                $u = $us[0];
-
-            if (!$u)
-                return null;
-            $usuarioLDAP = [
-                'userId' => 0,
-                'email' => $u->getAttributes()["mail"][0],
-                'username' => $u->getAttributes()["samaccountname"][0],
-                'nome' => $u->getAttributes()["displayname"][0],
-            ];
-            if ($createUser) {
-                $usuario = User::where('email', $usuarioLDAP['username'])->first();
-                if ($usuario)
-                    $usuarioLDAP['userId'] = $usuario->id;
-                else {
-                    $usuario = new User();
-                    $usuario->name = $usuarioLDAP['nome'];
-                    $usuario->email = $usuarioLDAP['username'];
-                    $usuario->password = 'not set';
-                    $usuario->permissao = User::PERMISSAO_USUARIO;
-                    $usuario->save();
-                    $usuarioLDAP['userId'] = $usuario->id;
-                }
-            }
-            return $usuarioLDAP;
-        }
-        return null;
-    }
-
-    private function getValidationRules() {
-        // read more on validation at http://laravel.com/docs/validation
-        $rules = array(
-            'name'        => 'required',
-            'email'       => 'required',
-            //'email'       => 'required|email',
-            //'permissao'   => 'required|permissao',
-        );
-        return $rules;
+    public function getInfosLdapServidorByDescription($cpf, $createUser = false)
+    {
+        return $this->service->getInfosLdapServidorByDescription($cpf, $createUser);;
     }
 
     /**
@@ -172,21 +62,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->getValidationRules(true));
-
-        // process the login
-        if ($validator->fails()) {
-            abort(403, 'Erro de Validação');
-        }
-
-        $usuario = new User();
-        $usuario->name = $request->input('name');
-        $usuario->email = $request->input('email');
-        $usuario->password = 'not set';
-        $usuario->permissao = User::PERMISSAO_USUARIO;
-        $usuario->save();
-
-        return User::all();
+        $this->service->create($request);
+        return $this->all();
     }
 
     /**
@@ -197,10 +74,7 @@ class UserController extends Controller
      */
     public function show(User $usuario)
     {
-
-        $us = User::findOrFail($usuario);
-
-        return $us;
+        return $this->service->show($usuario);
     }
 
     /**
@@ -211,9 +85,7 @@ class UserController extends Controller
      */
     public function edit(User $usuario)
     {
-        $us = Usuario::findOrFail($usuario);
-        return $usuario->with(['setor:id,sigla,campus_id'])->get(['id','login','nome','email','permissao','setor_id']);
-        return $usuario;
+        return $this->service->edit($usuario);
     }
 
     /**
@@ -225,12 +97,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $usuario)
     {
-        //$usuario->nome = $request->input('nome');
-        //$usuario->email = $request->input('email');
-        $usuario->permissao = $request->input('permissao');
-        $usuario->save();
-
-        return $usuario;
+        return $this->service->update($request, $usuario);
     }
 
     /**
@@ -241,26 +108,22 @@ class UserController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        if ($usuario->delete()) {
-            return new Usuario();
-        }
-        else {
-            abort(404, 'Usuário não encontrado');
-        }
+        return $this->service->delete($usuario);
     }
 
-    public function getFirstLastNameUser() {
+    public function getFirstLastNameUser()
+    {
         return $this->service->getFirstLastNameUser();
     }
 
-    public function getAllTokensUser(Request $request){
+    public function getAllTokensUser(Request $request)
+    {
         return $this->service->getAllTokensUser($request);
     }
 
-    public function revokeAllTokensUser(Request $request){
+    public function revokeAllTokensUser(Request $request)
+    {
         // Revoke all tokens...
         return json_encode($this->service->revokeAllTokensUser($request));
-
-   }
-
+    }
 }
