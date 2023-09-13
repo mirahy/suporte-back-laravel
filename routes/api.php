@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LoginApiController;
+use App\Http\Controllers\Api\PeriodosLetivosController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,13 @@ Route::middleware('corsApi')->group(function () {
             Route::get('/revoke-tokens-user', 'revokeAllTokensUser');
             Route::get('/get-first-last-name-user', 'getFirstLastNameUser');
             Route::get('/usuarios/lista', 'all');
+            Route::get('/salas/usuarios', 'list');
             Route::resource('usuarios', 'UserController');
+        });
+        // PeriodosLetivosController routes
+        Route::controller(PeriodosLetivosController::class)->group(function() {
+            Route::get('/periodo-letivos/all', 'all');
+            Route::resource('/periodo-letivos', 'PeriodosLetivosController');
         });
   
         

@@ -1,0 +1,113 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Suporte API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "LoginApiController"
+                ],
+                "summary": "User login",
+                "description": "Login",
+                "operationId": "393fc8fd46859e88dfb0d511f51ed531",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "validation_exception"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "LoginApiController"
+                ],
+                "summary": "User logout",
+                "description": "Logout",
+                "operationId": "acc9ebbaa82192859473f6df082ef196",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "validation_exception"
+                    }
+                }
+            }
+        },
+        "/logado": {
+            "get": {
+                "tags": [
+                    "LoginApiController"
+                ],
+                "summary": "Auth User",
+                "description": "User",
+                "operationId": "b85d278bb9d6cc925343fdf89888acdb",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "validation_exception"
+                    }
+                }
+            }
+        },
+        "/usuarios/lista": {
+            "get": {
+                "tags": [
+                    "UserController"
+                ],
+                "summary": "Return all users",
+                "description": "All",
+                "operationId": "98f70fb3e49dc695a21d67188b477dce",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "validation_exception"
+                    }
+                }
+            }
+        },
+        "/salas/usuarios": {
+            "get": {
+                "tags": [
+                    "UserController"
+                ],
+                "summary": "Return all users if user is Admin",
+                "description": "All",
+                "operationId": "0a5d53b5150df77539809ca6f0458e65",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "validation_exception"
+                    }
+                }
+            }
+        }
+    }
+}

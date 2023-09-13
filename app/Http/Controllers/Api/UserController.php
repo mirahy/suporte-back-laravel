@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Adldap\Laravel\Facades\Adldap;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Services\UserService;
-use Exception;
 
 class UserController extends Controller
 {
@@ -24,10 +20,44 @@ class UserController extends Controller
         $this->middleware('permissao:' . User::PERMISSAO_ADMINISTRADOR)->except(['usuarioLogado', 'list']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/usuarios/lista",
+     *     tags={"UserController"},
+     *     summary="Return all users",
+     *     description="All",
+     *     @OA\Response(
+     *         response="200",
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="validation_exception"
+     *     )
+     * )
+     */
+
     public function all()
     {
         return $this->service->all();
     }
+
+    /**
+     * @OA\Get(
+     *     path="/salas/usuarios",
+     *     tags={"UserController"},
+     *     summary="Return all users if user is Admin",
+     *     description="List",
+     *     @OA\Response(
+     *         response="200",
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="validation_exception"
+     *     )
+     * )
+     */
 
     public function list(Request $request)
     {
@@ -44,15 +74,6 @@ class UserController extends Controller
         return $this->service->getInfosLdapServidorByDescription($cpf, $createUser);;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,7 +83,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->service->create($request);
+        $this->service->keep($request);
         return $this->all();
     }
 

@@ -46,7 +46,7 @@ class UserService
             $this->loginValidator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
             // realiza login
             $auth = Auth::attempt($data);
-            //se usuário foi autenticado, revoga todos o tokens do usuário se existir e retorna o usuário e toke gerado.
+            //se usuário foi autenticado, revoga todos o tokens do usuário se existir e retorna o usuário e token gerado.
             if ($auth) {
                 $user = $this->repository->FindWhere(['email' => $request->get('email')])->first();
                 $tokens = $this->getAllTokensUser($request);
@@ -77,6 +77,7 @@ class UserService
     public function logout(Request $request)
     {
         $this->revokeAllTokensUser($request);
+        return ['msg' => 'Logout realizado com sucesso!'];
     }
 
     public function usuarioLogado(Request $request)
@@ -126,7 +127,7 @@ class UserService
         return User::all();
     }
 
-    public function create(Request $request)
+    public function keep(Request $request)
     {
 
         $data = $request->all();
