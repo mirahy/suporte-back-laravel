@@ -14,8 +14,18 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Class User.
  *
- * @package namespace App\Models;
+ * @author  TI Ead <ti.ead@ufgd.edu.br>
+ *
+ * @OA\Schema(
+ *     description="User model",
+ *     title="User",
+ *     required={"name", "email", "password", "permissao"},
+ *     @OA\Xml(
+ *         name="User"
+ *     )
+ * )
  */
+
 class User extends Authenticatable2 implements Authenticatable
 {
     use Notifiable, HasRoles, HasApiTokens, TransformableTrait;
@@ -23,6 +33,80 @@ class User extends Authenticatable2 implements Authenticatable
     const PERMISSAO_ADMINISTRADOR = "ADMINISTRADOR";
     const PERMISSAO_USUARIO = 'USUARIO';
     const PERMISSAO_INATIVO = 'INATIVO';
+
+    /**
+     * @OA\Property(
+     *     format="int64",
+     *     description="ID",
+     *     title="ID",
+     * )
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @OA\Property(
+     *     title="Name",
+     *     description="User Name",
+     *     maximum=191
+     * )
+     *
+     * @var String
+     */
+    private $name;
+
+    /**
+     * @OA\Property(
+     *      title="Email",
+     *      description="User email",
+     *      format="email"
+     *     
+     * )
+     *
+     * @var String
+     */
+    private $email;
+
+
+    /**
+     * @OA\Property(
+     *     title="Permissao",
+     *     description="User permission",
+     *     default="USUARIO",
+     *     enum={"ADMINISTRADOR", "USUARIO", "INATIVO"}, 
+     * )
+     *
+     * @var string
+     */
+    private $permissao;
+
+    /**
+     * @OA\Property(
+     *     title="Created at",
+     *     description="Created at",
+     *     example="2020-01-27 17:50:45",
+     *     format="datetime",
+     *     type="string"
+     * )
+     *
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @OA\Property(
+     *     title="Updated at",
+     *     description="Updated at",
+     *     example="2020-01-27 17:50:45",
+     *     format="datetime",
+     *     type="string"
+     * )
+     *
+     * @var \DateTime
+     */
+    private $updated_at;
+
 
     /**
      * The attributes that are mass assignable.

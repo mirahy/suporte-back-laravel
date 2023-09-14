@@ -17,33 +17,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('corsApi')->group(function () {
+// LoginApiController routes
+Route::controller(LoginApiController::class)->group(function () {
+    Route::post('/login',  'login');
+    Route::get('/logado', 'usuarioLogado')->middleware('auth:sanctum');
+    Route::get('/logout', 'logout')->middleware('auth:sanctum');
+});
 
-    Route::middleware('auth:sanctum')->group(function () {
-        // LoginApiController routes
-        Route::controller(LoginApiController::class)->group(function() {
-            Route::get('/logado', 'usuarioLogado');
-            Route::get('/logout', 'logout');
-        });
-        // UserController routes
-        Route::controller(UserController::class)->group(function() {
-            Route::get('/get-tokens-user', 'getAllTokensUser');
-            Route::get('/revoke-tokens-user', 'revokeAllTokensUser');
-            Route::get('/get-first-last-name-user', 'getFirstLastNameUser');
-            Route::get('/usuarios/lista', 'all');
-            Route::get('/salas/usuarios', 'list');
-            Route::resource('usuarios', 'UserController');
-        });
-        // PeriodosLetivosController routes
-        Route::controller(PeriodosLetivosController::class)->group(function() {
-            Route::get('/periodo-letivos/all', 'all');
-            Route::resource('/periodo-letivos', 'PeriodosLetivosController');
-        });
-  
-        
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    // UserController routes
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/get-tokens-user', 'getAllTokensUser');
+        Route::get('/revoke-tokens-user', 'revokeAllTokensUser');
+        Route::get('/get-first-last-name-user', 'getFirstLastNameUser');
+        Route::get('/usuarios/lista', 'all');
+        Route::get('/salas/usuarios', 'list');
+        Route::resource('usuarios', 'UserController');
     });
 
-    Route::post('/login', [LoginApiController::class, 'login']);
-    
-    
+    // PeriodosLetivosController routes
+    Route::controller(PeriodosLetivosController::class)->group(function () {
+        Route::get('/periodo-letivos/all', 'all');
+        Route::resource('/periodo-letivos', 'PeriodosLetivosController');
+    });
 });

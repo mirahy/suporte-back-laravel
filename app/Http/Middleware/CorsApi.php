@@ -16,11 +16,12 @@ class CorsApi
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request)
-        ->header('Content-Type', 'application/json')
-        ->header('Access-Control-Allow-Origin', "http://127.0.0.1:4200")
-        ->header('Access-Control-Allow-Credentials', "true")
-        ->header('Access-Control-Allow-Methods', "PUT, POST, DELETE, GET, OPTIONS, PATCH")
-        ->header('Access-Control-Allow-Headers', "Accept, Authorization, Content-Type");
+        
+            return $next($request)
+            ->header('Access-Control-Allow-Origin', "http://127.0.0.1:4200")
+            ->header('Access-Control-Allow-Credentials', "true")
+            ->header('Access-Control-Allow-Methods', "PUT, POST, DELETE, GET, OPTIONS, PATCH")
+            ->header('Access-Control-Allow-Headers', "Accept, Authorization, Content-Type");
+        
     }
 }

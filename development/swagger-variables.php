@@ -1,3 +1,3 @@
 <?php
 
-define("API_HOST", 'localhost');
+define("API_HOST", 'localhost:8088');

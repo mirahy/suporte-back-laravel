@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
-/**
-* @OA\Info(title="Suporte API", version="0.1")
-*/
 
 class LoginApiController extends Controller
 {
@@ -22,32 +19,44 @@ class LoginApiController extends Controller
     /**
      * @OA\Post(
      *     path="/login",
-     *     tags={"LoginApiController"},
+     *     tags={"Login"},
      *     summary="User login",
      *     description="Login",
      *     @OA\Parameter(
      *         name="email",
      *         in="query",
-     *         type="string",
      *         description="User email",
      *         required=true,
      *     ),
      *     @OA\Parameter(
      *         name="password",
      *         in="query",
-     *         type="string",
      *         description="User password",
      *         required=true,
      *     ), 
      *     @OA\Response(
-     *         response="200",
-     *         description="OK",
+     *      response="200",
+     *      description="successful operation",
+     *          @OA\JsonContent(
+     *              @OA\Examples(example="result", value={"token": {"accessToken": {"name": "loginUser_hashNow","abilities": "[*]","expires_at": null,"tokenable_id": 0,"tokenable_type": "App\\Models\\User","updated_at": "2023-09-14T21:20:01.000000Z","created_at": "2023-09-14T21:20:01.000000Z","id": 0},"plainTextToken": "idToken|laravel_sanctum_hash"},"user": {"id": 0,"name": "string","email": "user@example.com","permissao": "USUARIO","created_at": "2023-07-05T19:13:44.000000Z","updated_at": "2023-07-05T19:13:44.000000Z"}}, summary="response"),
+     *          ),
+     *     ),
+     *     
+     *     @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
      *     ),
      *     @OA\Response(
-     *         response="500",
-     *         description="validation_exception"
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
      *     )
      * )
+     * 
+     * @return array
      */
 
     public function login(Request $request){
@@ -58,18 +67,32 @@ class LoginApiController extends Controller
     /**
      * @OA\Post(
      *     path="/logout",
-     *     tags={"LoginApiController"},
+     *     tags={"Login"},
      *     summary="User logout",
      *     description="Logout",
      *    
      *     @OA\Response(
      *         response="200",
-     *         description="OK",
+     *         description="successful operation",
+     *         @OA\JsonContent(
+     *             @OA\AdditionalProperties(
+     *                 type="integer",
+     *                 format="int32"
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
-     *         response="401",
-     *         description="validation_exception"
-     *     )
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
      * )
      */
 
@@ -80,18 +103,27 @@ class LoginApiController extends Controller
      /**
      * @OA\Get(
      *     path="/logado",
-     *     tags={"LoginApiController"},
+     *     tags={"Login"},
      *     summary="Auth User",
      *     description="User",
      *    
      *     @OA\Response(
      *         response="200",
-     *         description="OK",
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/User" )
      *     ),
      *     @OA\Response(
-     *         response="401",
-     *         description="validation_exception"
-     *     )
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
      * )
      */
 

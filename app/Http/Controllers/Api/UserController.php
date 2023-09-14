@@ -29,11 +29,20 @@ class UserController extends Controller
      *     @OA\Response(
      *         response="200",
      *         description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Response(
-     *         response="500",
-     *         description="validation_exception"
-     *     )
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
      * )
      */
 
@@ -51,11 +60,20 @@ class UserController extends Controller
      *     @OA\Response(
      *         response="200",
      *         description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Response(
-     *         response="500",
-     *         description="validation_exception"
-     *     )
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
      * )
      */
 
