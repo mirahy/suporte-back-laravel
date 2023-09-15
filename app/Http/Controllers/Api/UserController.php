@@ -22,7 +22,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/usuarios/lista",
+     *     path="/api/usuarios/lista",
      *     tags={"UserController"},
      *     summary="Return all users",
      *     description="All",
@@ -53,7 +53,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/salas/usuarios",
+     *     path="/api/salas/usuarios",
      *     tags={"UserController"},
      *     summary="Return all users if user is Admin",
      *     description="List",

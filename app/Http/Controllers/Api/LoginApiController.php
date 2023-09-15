@@ -18,7 +18,7 @@ class LoginApiController extends Controller
     
     /**
      * @OA\Post(
-     *     path="/login",
+     *     path="/api/login",
      *     tags={"Login"},
      *     summary="User login",
      *     description="Login",
@@ -65,8 +65,8 @@ class LoginApiController extends Controller
     }
 
     /**
-     * @OA\Post(
-     *     path="/logout",
+     * @OA\Get(
+     *     path="/api/logout",
      *     tags={"Login"},
      *     summary="User logout",
      *     description="Logout",
@@ -102,10 +102,10 @@ class LoginApiController extends Controller
 
      /**
      * @OA\Get(
-     *     path="/logado",
+     *     path="/api/logado",
      *     tags={"Login"},
-     *     summary="Auth User",
-     *     description="User",
+     *     summary="Authenticate User",
+     *     description="Return Authenticate User",
      *    
      *     @OA\Response(
      *         response="200",
