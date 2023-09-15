@@ -38,7 +38,7 @@ class LoginApiController extends Controller
      *      response="200",
      *      description="successful operation",
      *          @OA\JsonContent(
-     *              @OA\Examples(example="result", value={"token": {"accessToken": {"name": "loginUser_hashNow","abilities": "[*]","expires_at": null,"tokenable_id": 0,"tokenable_type": "App\\Models\\User","updated_at": "2023-09-14T21:20:01.000000Z","created_at": "2023-09-14T21:20:01.000000Z","id": 0},"plainTextToken": "idToken|laravel_sanctum_hash"},"user": {"id": 0,"name": "string","email": "user@example.com","permissao": "USUARIO","created_at": "2023-07-05T19:13:44.000000Z","updated_at": "2023-07-05T19:13:44.000000Z"}}, summary="response"),
+     *              @OA\Examples(example="result", value={"token": {"accessToken": {"name": "loginUser_hashNow","abilities": "[*]","expires_at": null,"tokenable_id": 0,"tokenable_type": "App\\Models\\User","updated_at": "2020-01-27 17:50:45","created_at": "2020-01-27 17:50:45","id": 0},"plainTextToken": "idToken|laravel_sanctum_hash"},"user": {"id": 0,"name": "string","email": "login","permissao": "USUARIO","created_at": "2020-01-27 17:50:45","updated_at": "2020-01-27 17:50:45"}}, summary="response"),
      *          ),
      *     ),
      *     
@@ -75,10 +75,7 @@ class LoginApiController extends Controller
      *         response="200",
      *         description="successful operation",
      *         @OA\JsonContent(
-     *             @OA\AdditionalProperties(
-     *                 type="integer",
-     *                 format="int32"
-     *             )
+     *             @OA\Examples(example="result", value={"msg": "Logout realizado com sucesso!"}, summary="result."),
      *         )
      *     ),
      *     @OA\Response(

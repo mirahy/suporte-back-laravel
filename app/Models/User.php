@@ -49,7 +49,7 @@ class User extends Authenticatable2 implements Authenticatable
      * @OA\Property(
      *     title="Name",
      *     description="User Name",
-     *     maximum=191
+     *     maxLength=191,
      * )
      *
      * @var String
@@ -60,8 +60,8 @@ class User extends Authenticatable2 implements Authenticatable
      * @OA\Property(
      *      title="Email",
      *      description="User email",
-     *      format="email"
-     *     
+     *      format="email",
+      *     maxLength=191,  
      * )
      *
      * @var String
@@ -87,7 +87,8 @@ class User extends Authenticatable2 implements Authenticatable
      *     description="Created at",
      *     example="2020-01-27 17:50:45",
      *     format="datetime",
-     *     type="string"
+     *     type="int",
+     *     default="CURRENT_TIMESTAMP",
      * )
      *
      * @var \DateTime
@@ -100,7 +101,8 @@ class User extends Authenticatable2 implements Authenticatable
      *     description="Updated at",
      *     example="2020-01-27 17:50:45",
      *     format="datetime",
-     *     type="string"
+     *     type="int",
+     *     default="NULL",
      * )
      *
      * @var \DateTime
