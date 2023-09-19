@@ -31,6 +31,7 @@ class User extends Authenticatable2 implements Authenticatable
     use Notifiable, HasRoles, HasApiTokens, TransformableTrait;
 
     const PERMISSAO_ADMINISTRADOR = "ADMINISTRADOR";
+    const PERMISSAO_SERVIDOR = 'SERVIDOR';
     const PERMISSAO_USUARIO = 'USUARIO';
     const PERMISSAO_INATIVO = 'INATIVO';
 
@@ -74,7 +75,7 @@ class User extends Authenticatable2 implements Authenticatable
      *     title="Permissao",
      *     description="User permission",
      *     default="USUARIO",
-     *     enum={"ADMINISTRADOR", "USUARIO", "INATIVO"}, 
+     *     enum={"ADMINISTRADOR", "SERVIDOR", "USUARIO", "INATIVO"}, 
      * )
      *
      * @var string

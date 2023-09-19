@@ -17,7 +17,7 @@ class CorsApi
     public function handle(Request $request, Closure $next)
     {
             // list allow hosts
-            $allowed_domains = ['http://localhost:8088', 'http://127.0.0.1:4200'];
+            $allowed_domains = ['http://localhost:8088', 'http://127.0.0.1:4200', 'http://localhost:4200'];
 
             // if source host is from another server get origin otherwise get host
             if($request->headers->has('origin'))

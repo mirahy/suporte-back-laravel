@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Route;
 // LoginApiController routes
 Route::controller(LoginApiController::class)->group(function () {
     Route::post('/login',  'login');
-    Route::get('/logado', 'usuarioLogado')->middleware('auth:sanctum');
-    Route::get('/logout', 'logout')->middleware('auth:sanctum');
+    Route::get('/logado', 'usuarioLogado')->middleware(['auth:sanctum']);
+    Route::get('/logout', 'logout')->middleware(['auth:sanctum']);
 });
 
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'authsession'])->group(function () {
 
     // UserController routes
     Route::controller(UserController::class)->group(function () {
