@@ -77,6 +77,8 @@ class UserService
     public function logout(Request $request)
     {
         $this->revokeAllTokensUser($request);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return ['msg' => 'Logout realizado com sucesso!'];
     }
 
