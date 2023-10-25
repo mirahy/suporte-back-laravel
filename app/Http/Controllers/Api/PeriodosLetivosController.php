@@ -20,7 +20,7 @@ class PeriodosLetivosController extends Controller
     {
         $this->service          =$service;
         $this->middleware('auth');
-        $this->middleware('permissao:' . User::PERMISSAO_ADMINISTRADOR . ',' . User::PERMISSAO_USUARIO);
+        $this->middleware('permissao:' . User::PERMISSAO_ADMINISTRADOR . ',' . User::PERMISSAO_SERVIDOR);
         $this->middleware('permissao:' . User::PERMISSAO_ADMINISTRADOR)->except(['all']);
     }
 
