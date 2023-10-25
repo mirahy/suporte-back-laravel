@@ -133,8 +133,8 @@ Route::get('/servidores-moodle/links', 'ServidoresMoodleController@links');
 Route::get('/servidores-moodle/download-script', 'ServidoresMoodleController@downloadScript');
 Route::resource('servidores-moodle', 'ServidoresMoodleController');
 
-Route::get('/formulario-insere-usuarios', 'ServidoresMoodleController@formulariosIndex');
-Route::post('/formulario-insere-usuarios', 'ServidoresMoodleController@exportarEstudantes');
+Route::get('/formulario-insere-usuarios', 'ServidoresMoodleController@formulariosIndex')->middleware('authhost');
+Route::post('/formulario-insere-usuarios', 'ServidoresMoodleController@exportarEstudantes')->middleware('authhost');
 Route::get('/formulario-recuperacao-arquivos', 'ServidoresMoodleController@formulariosIndex');
 
 //Route::get('/agenda', function () {return view("layouts.app-angular");});
@@ -177,9 +177,9 @@ Route::post('/formulario-pessoas-estatus-lotacao/cursos-faculdade', 'PessoasEsta
 Route::post('/formulario-pessoas-estatus-lotacao/academico', 'PessoasEstatusLotacaoController@getDadosAcademico');
 Route::post('/formulario-pessoas-estatus-lotacao/funcionario', 'PessoasEstatusLotacaoController@getDadosFuncionarios');
 
-Route::get('/usuarios/lista', 'UsuarioController@all');
+Route::get('/usuarios/lista', 'UsuarioController@all')->middleware('authhost');
 Route::get('/logado', 'UsuarioController@usuarioLogado');
-Route::resource('usuarios', 'UsuarioController');
+Route::resource('usuarios', 'UsuarioController')->middleware('authhost');
 
 Route::get('/logs/exportacao-estudantes/{arquivo?}', 'LogsController@exportacaoEstudantes');
 Route::get('/logs', 'LogsController@index');
@@ -204,7 +204,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/roles', 'RolesController');
+Route::resource('/roles', 'RolesController')->middleware('authhost');
 
 Route::get('/swagger', 'SwaggerController@index');
 
