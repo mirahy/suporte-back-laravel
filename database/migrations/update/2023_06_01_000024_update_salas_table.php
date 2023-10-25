@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('salas', function (Blueprint $table) {
+        Schema::table($this->tableName, function (Blueprint $table) {
             $table->string('link_backup_moodle', 100)->nullable()->after('observacao');
         });
     }
@@ -34,7 +34,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('salas', function (Blueprint $table) {
+        Schema::table($this->tableName, function (Blueprint $table) {
             $table->dropColumn('link_backup_moodle');
         });
     }

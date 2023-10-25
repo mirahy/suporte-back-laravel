@@ -12,7 +12,7 @@ return new class extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'servidores_moodle';
+    public $tableName = 'sessions';
 
     /**
      * Run the migrations.
@@ -25,14 +25,12 @@ return new class extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
-            $table->string('nome', 63);
-            $table->string('url', 63);
-            $table->string('nome_banco', 50);
-            $table->string('ip_banco', 50);
-            $table->string('ip_server', 50)->require();
-            $table->string('prefixo', 10);
-            $table->enum('status', ['ON', 'OFF'])->require()->default('OFF');
-            $table->tinyInteger('ativo');
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('pass', 100)->nullable(false);
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->text('payload');
+            $table->integer('last_activity')->index();
             $table->nullableTimestamps();
             $table->softDeletes();
         });

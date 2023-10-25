@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CursosMoodleController;
 use App\Http\Controllers\Api\LoginApiController;
 use App\Http\Controllers\Api\PeriodosLetivosController;
 use App\Http\Controllers\Api\UserController;
@@ -41,5 +42,14 @@ Route::middleware(['auth:sanctum', 'authsession'])->group(function () {
     Route::controller(PeriodosLetivosController::class)->group(function () {
         Route::get('/periodo-letivos/all', 'all');
         Route::resource('/periodo-letivos', 'PeriodosLetivosController');
+    });
+
+    // CursosMoodleController routes
+    Route::controller(CursosMoodleController::class)->group(function () {
+        Route::get('/meus-cursos', 'meusCursos');
+        Route::get('/td-cursos', 'todosCursos');
+        Route::post('/get-meus-cursos', 'getMoodlesComCursos');
+        Route::post('/get-moodles', 'getMoodles');
+        Route::post('/go-moodle', 'goMoodle');
     });
 });

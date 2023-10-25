@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use Adldap\Laravel\Facades\Adldap;
+use App\Models\Sessions;
 use App\Models\User;
 use App\Models\Usuario;
+use App\Providers\Crypt;
 use App\Repositories\UserRepository;
 use App\Validators\LoginValidator;
 use App\Validators\UserValidator;
@@ -22,17 +24,19 @@ class UserService
     private $loginValidator;
     private $userValidator;
     private $repository;
-
+    private $crypt;
 
     public function __construct(
         LoginValidator $loginValidator,
         UserRepository $repository,
-        UserValidator $userValidator
+        UserValidator $userValidator,
+        Crypt $crypt
     ) {
 
         $this->loginValidator       = $loginValidator;
         $this->userValidator        = $userValidator;
         $this->repository           = $repository;
+        $this->crypt                = $crypt;
     }
 
 
@@ -48,7 +52,18 @@ class UserService
             $auth = Auth::attempt($data);
             //se usuário foi autenticado, revoga todos o tokens do usuário se existir e retorna o usuário e token gerado.
             if ($auth) {
+                // encripitando senha do usuario para gauarda na sessão
+                $pass = $this->crypt->encrypt($data['password']);
+                //recuperando usuário
                 $user = $this->repository->FindWhere(['email' => $request->get('email')])->first();
+                //criando array com id so usuario e senha encriptada para gardar na sessão
+                $dataSession = ['user_id'=> $user->id, 'pass' => $pass, 'ip_address' => $request->ip(), 'user_agent' => $request->header('user-agent')];
+                $session = Sessions::where('user_id', $request->user()->id)->get();
+                if($session){
+                    Sessions::where('user_id', $request->user()->id)->delete();
+                }
+                Sessions::create($dataSession);
+                //criando token
                 $tokens = $this->getAllTokensUser($request);
                 if ($tokens)
                     $this->revokeAllTokensUser($request);
@@ -76,9 +91,8 @@ class UserService
 
     public function logout(Request $request)
     {
+        Sessions::where('user_id', $request->user()->id)->delete();
         $this->revokeAllTokensUser($request);
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
         return ['msg' => 'Logout realizado com sucesso!'];
     }
 
