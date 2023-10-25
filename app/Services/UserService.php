@@ -48,11 +48,17 @@ class UserService
         try {
             //validar campos
             $this->loginValidator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+
+            $credentials = [
+                'samaccountname' => $request->email,
+                'password' => $request->password,
+            ];
+
             // realiza login
-            $auth = Auth::attempt($data);
-            //se usuário foi autenticado, revoga todos o tokens do usuário se existir e retorna o usuário e token gerado.
+            $auth = Auth::attempt($credentials);
+            //se usuário foi autenticado, revoga todos os tokens e sessões do usuário se existir e retorna o usuário e token gerado.
             if ($auth) {
-                // encripitando senha do usuario para gauarda na sessão
+                // encripitando senha do usuario para guarda na sessão
                 $pass = $this->crypt->encrypt($data['password']);
                 //recuperando usuário
                 $user = $this->repository->FindWhere(['email' => $request->get('email')])->first();
