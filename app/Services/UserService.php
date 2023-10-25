@@ -25,14 +25,17 @@ class UserService
     private $userValidator;
     private $repository;
     private $crypt;
+    private $resourcesService;
 
     public function __construct(
         LoginValidator $loginValidator,
         UserRepository $repository,
         UserValidator $userValidator,
+        ResourcesService $resourcesService,
         Crypt $crypt
     ) {
 
+        $this->resourcesService     = $resourcesService;
         $this->loginValidator       = $loginValidator;
         $this->userValidator        = $userValidator;
         $this->repository           = $repository;
@@ -75,6 +78,8 @@ class UserService
                     $this->revokeAllTokensUser($request);
                 $nameToken = $request->get('email') . "_" . hash('md5', now());
                 $token = $user->createToken($nameToken);
+
+                $user['keepUser'] = $this->resourcesService->keepUser;
 
                 return ['token' => $token, 'user' => $user];
             } else {
