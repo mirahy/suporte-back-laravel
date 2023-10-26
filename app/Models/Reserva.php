@@ -51,6 +51,6 @@ class Reserva extends Model
      */
     public function recurso()
     {
-        return $this->hasOne('App\Recurso', 'id', 'recurso_id');
+        return $this->hasOne('App\Models\Recurso', 'id', 'recurso_id');
     }
 }

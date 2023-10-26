@@ -37,6 +37,6 @@ class Recurso extends Model
      */
     public function gestoresRecursos()
     {
-        return $this->belongsToMany('App\User', 'gestores_recursos','recurso_id','user_id');
+        return $this->belongsToMany('App\Models\User', 'gestores_recursos','recurso_id','user_id');
     }
 }

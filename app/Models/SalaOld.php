@@ -52,7 +52,7 @@ class SalaOld extends Model
     
     public function macro()
     {
-        return $this->belongsTo('App\Macro');
+        return $this->belongsTo('App\Models\Macro');
     }
 
     

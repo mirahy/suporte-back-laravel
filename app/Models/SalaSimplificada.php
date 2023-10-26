@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
-use App\SalaGenerica;
+use App\Models\SalaGenerica;
 
 class SalaSimplificada extends Model
 {
@@ -53,17 +53,17 @@ class SalaSimplificada extends Model
 
     public function lote()
     {
-        return $this->belongsTo('App\LoteSalasSimplificado');
+        return $this->belongsTo('App\Models\LoteSalasSimplificado');
     }
 
     public function curso()
     {
-        return $this->belongsTo('App\Curso','curso_id');
+        return $this->belongsTo('App\Models\Curso','curso_id');
     }
 
     public function periodoLetivo()
     {
-        return $this->belongsTo('App\PeriodoLetivo','periodo_letivo_id');
+        return $this->belongsTo('App\Models\PeriodoLetivo','periodo_letivo_id');
     }
 
     public function getSalaTemp($macroId) : SalaGenerica {

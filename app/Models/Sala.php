@@ -91,27 +91,27 @@ class Sala extends Model
 
     public function macro()
     {
-        return $this->belongsTo('App\Macro');
+        return $this->belongsTo('App\Models\Macro');
     }
 
     public function solicitante()
     {
-        return $this->belongsTo('App\User','solicitante_id');
+        return $this->belongsTo('App\Models\User','solicitante_id');
     }
 
     public function curso()
     {
-        return $this->belongsTo('App\Curso','curso_id');
+        return $this->belongsTo('App\Models\Curso','curso_id');
     }
 
     public function periodoLetivo()
     {
-        return $this->belongsTo('App\PeriodoLetivo','periodo_letivo_id');
+        return $this->belongsTo('App\Models\PeriodoLetivo','periodo_letivo_id');
     }
 
     public function loteSalas()
     {
-        return $this->belongsTo('App\LoteSalas', '');
+        return $this->belongsTo('App\Models\LoteSalas', '');
     }
 
     public function getEstudantesComProfessor()

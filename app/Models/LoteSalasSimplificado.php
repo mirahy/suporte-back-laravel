@@ -30,17 +30,17 @@ class LoteSalasSimplificado extends Model
 
     public function servidorMoodle()
     {
-        return $this->belongsTo('App\ServidorMoodle');
+        return $this->belongsTo('App\Models\ServidorMoodle');
     }
 
     public function superMacro()
     {
-        return $this->belongsTo('App\SuperMacro');
+        return $this->belongsTo('App\Models\SuperMacro');
     }
 
     public function grupo()
     {
-        return $this->belongsTo('App\GrupoLotesSimplificado', 'grupo_id');
+        return $this->belongsTo('App\Models\GrupoLotesSimplificado', 'grupo_id');
     }
 
     public function salasSimplificadas()

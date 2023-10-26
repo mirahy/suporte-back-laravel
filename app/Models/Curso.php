@@ -138,6 +138,6 @@ class Curso extends Model
 
     public function faculdade()
     {
-        return $this->belongsTo('App\Faculdade');
+        return $this->belongsTo('App\Models\Faculdade');
     }
 }

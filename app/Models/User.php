@@ -136,7 +136,7 @@ class User extends Authenticatable2 implements LdapAuthenticatable
      */
     public function gestorRecursos()
     {
-        return $this->belongsToMany('App\Recurso', 'gestores_recursos','user_id','recurso_id');
+        return $this->belongsToMany('App\Models\Recurso', 'gestores_recursos','user_id','recurso_id');
     }
 
     public function isAdmin() {

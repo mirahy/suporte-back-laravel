@@ -35,11 +35,11 @@ class PlDisciplinaAcademico extends Model
 
     public function curso()
     {
-        return $this->belongsTo('App\Curso');
+        return $this->belongsTo('App\Models\Curso');
     }
 
     public function periodoLetivo()
     {
-        return $this->belongsTo('App\PeriodoLetivo');
+        return $this->belongsTo('App\Models\PeriodoLetivo');
     }
 }

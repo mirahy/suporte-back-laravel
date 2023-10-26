@@ -49,12 +49,12 @@ class MacroSuperMacro extends Model
     
     public function macro()
     { 
-        return $this->belongsTo('App\Macro');
+        return $this->belongsTo('App\Models\Macro');
     }
 
     public function superMacro()
     { 
-        return $this->belongsTo('App\SuperMacro');
+        return $this->belongsTo('App\Models\SuperMacro');
     }
 
     

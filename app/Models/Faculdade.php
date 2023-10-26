@@ -32,7 +32,7 @@ class Faculdade extends Model
      *
      * @var int
      */
-    private $id;
+    protected $id_f;
 
     /**
      * @OA\Property(
@@ -43,7 +43,7 @@ class Faculdade extends Model
      *
      * @var String
      */
-    private $sigla;
+    protected $sigla;
 
     /**
      * @OA\Property(
@@ -54,7 +54,7 @@ class Faculdade extends Model
      *
      * @var String
      */
-    private $nome;
+    protected $nome;
 
     /**
      * @OA\Property(
@@ -65,7 +65,7 @@ class Faculdade extends Model
      *
      * @var int
      */
-    private $auto_increment_ref;
+    protected $auto_increment_ref;
 
     /**
      * @OA\Property(
@@ -78,7 +78,7 @@ class Faculdade extends Model
      *
      * @var int
      */
-    private $ativo;
+    protected $ativo;
     
     /**
      * @OA\Property(
@@ -92,7 +92,7 @@ class Faculdade extends Model
      *
      * @var \DateTime
      */
-    private $created_at;
+    protected $created_at;
 
     /**
      * @OA\Property(
@@ -106,7 +106,7 @@ class Faculdade extends Model
      *
      * @var \DateTime
      */
-    private $updated_at;
+    protected $updated_at;
 
 
     protected $fillable = [

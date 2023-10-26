@@ -46,7 +46,7 @@ class Macro extends Model
 
     public function periodoLetivo()
     { 
-        return $this->belongsTo('App\PeriodoLetivo');
+        return $this->belongsTo('App\Models\PeriodoLetivo');
     }
 }
 

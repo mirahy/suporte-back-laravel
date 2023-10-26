@@ -22,10 +22,10 @@ class SuperMacro extends Model
     ];
  
     public function macroPadrao() {
-        return $this->belongsTo('App\Macro','macro_padrao_id');
+        return $this->belongsTo('App\Models\Macro','macro_padrao_id');
     }
     /*public function periodoLetivo()
     { 
-        return $this->belongsTo('App\PeriodoLetivo');
+        return $this->belongsTo('App\Models\PeriodoLetivo');
     }*/
 }
