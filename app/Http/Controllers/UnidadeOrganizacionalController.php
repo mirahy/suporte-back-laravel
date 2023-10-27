@@ -351,6 +351,10 @@ class UnidadeOrganizacionalController extends Controller
 
     public function alterarSenha(Request $request)
     {
+
+        try {
+            $this->adConnect636($request);
+            
         $estudantes = $request->has('estudantes') ? json_decode($request->input('estudantes')) : null;
         $configEmail = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_EMAIL_SUPORTE)->first();
         $configSeparadorEmail = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_SEPARADOR_EMAIL)->first();
@@ -360,12 +364,13 @@ class UnidadeOrganizacionalController extends Controller
 
         $ret = "<h4><b>Alteração de Senha de Usuários no AD</b></h4><br>";
 
+        $ret .= "<br><b>Tentativas de conexão: " . $this->trying . "</b><br>";
+
         $ret .= "<br><b>Iniciando processo...</b><br><br>";
 
         $ret .= '<table class="tabela-relatorio"><thead><tr>'
             . '<th>Username</th>'
             . '<th>Nome</th>'
-            . '<th>Nova Senha</th>'
             . '<th>Processamento</th>'
             . '</tr></thead><tbody>';
         foreach ($estudantes as $e) {
@@ -380,7 +385,7 @@ class UnidadeOrganizacionalController extends Controller
                 }
 
                 $nomeUser = $user->getAttributes()['name'][0];
-                $ret .= "<tr><td>" . $e[0] . '</td><td>' . $nomeUser . "</td><td>" . $pass . "</td><td>";
+                $ret .= "<tr><td>" . $e[0] . '</td><td>' . $nomeUser . "</td><td>";
 
                 $user->unicodePwd = $pass;
 
@@ -412,8 +417,15 @@ class UnidadeOrganizacionalController extends Controller
 
         $ret .= "<br><br><b>Alteração de usuários no AD Finalizada!</b>";
 
+        $this->adConnect389();
 
         return $ret;
+
+        } catch (\LdapRecord\Auth\BindException $e) {
+            $error = $e->getDetailedError();
+            $message = $error->getErrorCode() . ' | ' . $error->getErrorMessage() . ' | ' . $error->getDiagnosticMessage();
+            abort(500, $message);
+    }
     }
 
     public function substituiEmailsPorPadrao(Request $request)
