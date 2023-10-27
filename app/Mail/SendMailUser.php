@@ -4,13 +4,13 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Sala;
+use App\Models\Sala;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Configuracoes;
-use App\SalaOld;
-
-class SendMailUser extends Mailable
+use App\Models\Configuracoes;
+use App\Models\SalaOld;
+ 
+class SendMailUser extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
