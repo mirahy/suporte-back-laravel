@@ -433,7 +433,7 @@ class UnidadeOrganizacionalController extends Controller
                 'username' => $e[0],
                 'fullname' => $e[2],
                 'email' => ($this->isCPF($e[0]) ? $this->geraEmail($e[2], $e[0], "@" . $sufixo) : $e[1]),
-                'email_alternativo' => $e[3],
+                'email_alternativo' => $e[4],
                 'is_professor' => false
             ];
         }
