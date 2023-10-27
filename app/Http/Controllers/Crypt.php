@@ -14,12 +14,13 @@ class Crypt
      *
      * @var string
      */
-    private $key = env('CRYPT_KEY');
-    private $nonce = env('CRYPT_NONCE');
+    private  $key;
+    private  $nonce;
 
     public function __construct()
     {
         $this->key = env('CRYPT_KEY');
+        $this->nonce = env('CRYPT_NONCE');
     }
 
     /**
