@@ -12,11 +12,9 @@ use LdapRecord\Models\ActiveDirectory\OrganizationalUnit;
 use LdapRecord\Models\Attributes\AccountControl;
 use LdapRecord\Models\ActiveDirectory\Group;
 use App\Models\Configuracoes;
-use App\Mail\SendMailUserLdap;
+use App\Models\Sessions;
 use App\Notifications\UserAdCreate;
-use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use LdapRecord\Connection;
 use LdapRecord\Container;
@@ -52,7 +50,7 @@ class UnidadeOrganizacionalController extends Controller
             'hosts'            => [env('LDAP_USERKEEP_HOSTS'), env('LDAP_USERKEEP_HOSTS_2')],
             'base_dn'          => env('LDAP_USERKEEP_BASE_DN'),
             'username'         => 'cn=' . $name . ',' . env('OU_USER'),
-            'password'         => $this->crypt->decrypt($request->session()->get('pass')),
+            'password'         => $this->crypt->decrypt(Sessions::where('user_id', $usuario->id)->get('pass')->toArray()[0]['pass']),
 
             // Optional Configuration Options
             'port'             => 636,
@@ -358,8 +356,6 @@ class UnidadeOrganizacionalController extends Controller
             $this->adConnect636($request);
             
         $estudantes = $request->has('estudantes') ? json_decode($request->input('estudantes')) : null;
-        $configEmail = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_EMAIL_SUPORTE)->first();
-        $configSeparadorEmail = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_SEPARADOR_EMAIL)->first();
         $acao = 'alterada';
 
         if (!$estudantes)
@@ -396,7 +392,7 @@ class UnidadeOrganizacionalController extends Controller
 
                 $ret .= "<span style=\"color: #1bb300;\">Senha alterada!</span>";
 
-                Notification::route('mail', $e[3])
+                Notification::route('mail', $e[4])
                 ->notify(new UserAdCreate($user, $pass, $acao));
 
             } catch (Exception $ex) {
@@ -465,8 +461,6 @@ class UnidadeOrganizacionalController extends Controller
             $company = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_AD_COMPANY)->first()->valor;
             $department = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_AD_DEPARTMENT)->first()->valor;
             $userprincipalnameSufixo = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_AD_USER_PRINCIPAL_NAME_SUFIXO)->first()->valor;
-            $configEmail = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_EMAIL_SUPORTE)->first();
-            $configSeparadorEmail = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_SEPARADOR_EMAIL)->first();
             $acao = 'criada';
 
             if (!$ouCadastro || !$ousIds || !$estudantes)
@@ -493,13 +487,12 @@ class UnidadeOrganizacionalController extends Controller
             $ret .= '<table class="tabela-relatorio"><thead><tr>'
                 . '<th>Username</th>'
                 . '<th>Nome</th>'
-                . '<th>Email</th>'
                 . '<th>Processamento</th>'
                 . '</tr></thead><tbody>';
             foreach ($estudantes as $e) {
                 $pass = $this->generateStrongPassword();
                 $e[2] = $this->tratarNome($e[2]);
-                $ret .= "<tr><td>" . $e[0] . "</td><td>" . $e[2] . "</td><td>" . $pass . "</td><td>";
+                $ret .= "<tr><td>" . $e[0] . "</td><td>" . $e[2] . "</td><td>";
                 if (!$this->isCPF($e[0])) {
                     $ret .= '<span style="color: #e9d700;">CPF Inválido para username </span>';
                     continue;
@@ -537,8 +530,8 @@ class UnidadeOrganizacionalController extends Controller
 
                     $ret .= "<span style=\"color: #1bb300;\">Usuário criado!</span>";
 
-                    Notification::route('mail', $e[3])
-                    ->notify(new UserAdCreate($user, $pass, $acao));
+                    Notification::route('mail', $e[4])
+                        ->notify(new UserAdCreate($user, $pass, $acao));
                     
                 } catch (Exception $ex) {
                     $ret .= '<span style="color: #ff0000;"> Erro: ' . $ex->getMessage() . ' </span>';
