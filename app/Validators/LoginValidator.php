@@ -32,8 +32,8 @@ class LoginValidator extends LaravelValidator
       protected $messages = [
         'email.required'        => 'Email é obrigatório!',
         'password.required'     => 'Senha é obrigatoria!',
-        'email.string'          => 'Email/Senha incorreto!',
-        'password.string'       => 'Email/Senha incorreto!',
+        'email.string'          => 'Login e/ou Senha incorretos!',
+        'password.string'       => 'Login e/ou Senha incorretos!',
         
     ];
 }
